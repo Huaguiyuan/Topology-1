@@ -1,0 +1,40 @@
+# Cix file for cluster DMFT with CTQMC
+# cluster_size, number of states, number of baths, maximum matrix size
+gout.ignore(1000,'\n');
+gout.ignore(1000,'\n');
+1 4 2 1
+Nm>>nsize>>N_ifl>>max_size
+Comment lines are ignored by the code, but the code expects some string or empty line. The second line contains the cluster size (1 for single site), the number of all atomic states (which is 4 for a single impurity, i.e., empty site, spin down, spin up, and doubly occupied site)This is followed by the number of bath blocks, i.e., the type of bands that hybridize with the impurity. Here we have spin-up and spin-down bath, hence number of baths is 2. Finally, the second line specifies the maximum size of the matrix, which defines the electron creation operator. In general, it is larger than one, when we have full Coulomb interaction. 
+
+# baths, dimension, symmetry, global flip
+gout.ignore(1000,'\n');
+gout.ignore(1000,'\n');
+# baths, dimension, symmetry, global flip
+0       1 0 0
+1       1 1 0
+
+Following the third line, we have several lines, which specify the type of baths we have. Since we specified that there are two baths, we need to have here two lines, one for spin-up and one for spin-down. The first number in the line is just increasing integer, the second specifies the dimension of the bath block. Each block is one dimensional here. Next we specify which blocks are equivalent due to symmetry. Here we have FM state, hence the two baths have the different. Finally, we have a number, which specifies which baths should be flipped by the global flip. Two baths, which have the same index, will be exchanged.
+
+# detils about the input params file contain:
+"Ncout"              : [1000000]
+How often to print information of ctqmc solver to imp.?/nohup_imp.out. 
+"aom"              : [5]
+
+"sderiv"           : [0.01]
+
+Direct sampling of ctqmc self-energy contains considerable noise at high frequency, and therefore the high frequency is computed differently, i.e., by sampling certain equal time correlation functions, which give exact high frequency moments of the self-energy. The high frequency (beyond "nom" Matsubara point) is thus described by an analytic tail. However, the merging of the noisy MC data with the tail is not always perfect. This is demonstrated in the figure below, where the raw data (imp.0/Sig.outb) is compared with the broadened counterpart (imp.0/Sig.out). We use the following algorithm:
+"HB2"            : [True                   , "# Computing self-energy from Bullas trick"]
+
+This avoids computing the self-energy from the Dyson equation. It rather samples a higher order correlation function, which has the property that when divided by the Green's function, gives the self-energy.
+
+
+"GlobalFlip"         : [1000000              , "# How often to try a global flip"]
+"warmup"             : [3e5                  , "# Warmup number of QMC steps"],
+"tsample"            : [30                   , "# How often to record measurements"],
+
+Every "GlobalFlip"=1000000 MC steps we try a global flip, where we try to flip all up spin into down spins. We skip first "warmup" MC steps before we start measuring observables. Observables are being measured every "tsample" MC steps. Note that it is a good idea to look into imp.0/ctqmc.log to see how often we accept a move with adding/removing kinks (successfulC) and with moving a kink (successfulM). For this particular run successfulC is of the order of 10% and succesfullM around 1.3%, hence if we sample every 10-30 steps, we do not loose any information.
+
+"OCA_G"              : [False               , "# Don't compute OCA diagrams for speed"]
+
+Exact diagonalization of the atom computes input file for both the ctqmc and OCA solver. To generate the OCA input takes some time, and we switch it off here to speed up the exact diagonalization part. 
+

@@ -1,0 +1,10 @@
+#Cix file for cluster DMFT with CTQMC
+#cluster_size, number of states, number of baths, maximum_ma
+4 84 6 12
+#baths, dimension, symmetry, global flip
+0	1	0				0
+1	1	-0*				1
+2	2	1	3	3 	-1*	2	
+3	2	1	-3	-3      -1*	3
+4	1	2				4
+5	1	-2*				5

@@ -1,0 +1,18 @@
+Tbut let me add some comments which connect to your question of the relation of between the Z2 invariant ν and the first Chern-Number C1
+
+.H = {{H_up 0}{0, H_down}
+
+Such a relation does not exist unless you require some extra symmetry than the generic symmetries usually required in the classification of topological insulators (such as time-reversal invariance in this case). Say the Hamiltonian is invariant under spin rotations along the z
+-axis (so a U(1) subgroup of SU(2)
+
+in left invariant), then the Hamiltonian can be block-diagonalized as
+
+H=(H↑H↓),
+
+where the indices refer to spin-up and down degrees of freedom. Due to time reversal symmetry we have that H↓(k)=H∗↑(−k)
+. The system now consist of two copies of Quantum Hall effects with counter propagating edge states of opposite spin. As Davis Aasen says, the chern number is zero C1=C↑1+C↓1=0. The difference however, the "spin Chern number", C↑1−C↓1=2Cspin can be non-zero and can be calculated by the Chern-numbers of the spin up/down sectors. As long as Sz is preserved the spin Chern-number can be any integer Cspin∈Z
+
+.
+
+But if we add off-diagonal elements, and thus break the rotation symmetry along z
+, the invariant breaks down to ν=Cspinmod2∈Z2 (as was shown by Kane and Mele). So topological trivial/non-trivial phases are characterized by even and odd spin-Chern numbers Cspin, not the original Chern number C1. This however only makes sense when you have this extra symmetry.
